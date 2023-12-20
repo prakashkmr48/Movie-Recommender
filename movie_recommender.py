@@ -15,7 +15,16 @@ item_similarities = cosine_similarity(user_item_matrix.fillna(0))
 
 # Define recommendation function
 def recommend_movies(movie_name, user_id, num_recommendations=10):
-    # ... (same as before)
+    movie_index = movies_df[movies_df['title'] == movie_name].index[0]
+    similar_movies = item_similarities[movie_index]
+    sorted_indexes = similar_movies.argsort()[::-1]
+    recommendations = []
+    for i in sorted_indexes:
+        if user_item_matrix.iloc[user_id, i] == 0:  # Check if not already rated
+            recommendations.append(movies_df.iloc[i]['title'])
+            if len(recommendations) == num_recommendations:
+                break
+    return recommendations
 
 # Create Streamlit app layout
 st.title("Movie Recommender")
