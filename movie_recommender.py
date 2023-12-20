@@ -8,7 +8,7 @@ movies_df = pd.read_csv("movies.csv")
 # Preprocess data (e.g., handle missing values, normalize ratings)
 
 # Create user-item matrix
-user_item_matrix = movies_df.pivot_table(values='rating', index='userId', columns='movieId')
+user_item_matrix = movies_df.pivot_table(values='release_year', index='show_id', columns='title')
 
 # Calculate item similarities
 item_similarities = cosine_similarity(user_item_matrix.fillna(0))
